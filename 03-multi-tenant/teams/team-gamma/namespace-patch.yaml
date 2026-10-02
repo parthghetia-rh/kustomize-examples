@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: placeholder
+  labels:
+    tenant: team-gamma
+    cost-center: platform

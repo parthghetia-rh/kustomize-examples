@@ -1,0 +1,14 @@
+controller:
+  replicaCount: 1
+
+  service:
+    type: LoadBalancer
+    annotations: {}
+
+  resources: {}
+
+  metrics:
+    enabled: false
+
+  admissionWebhooks:
+    enabled: true

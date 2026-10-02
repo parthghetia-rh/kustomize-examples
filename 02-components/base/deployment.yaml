@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: team-apps
+  labels:
+    app: nginx
+    app.kubernetes.io/name: nginx
+    app.kubernetes.io/part-of: team-apps
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+        app.kubernetes.io/name: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: registry.access.redhat.com/ubi9/nginx-122:latest
+          ports:
+            - containerPort: 8080
+              protocol: TCP

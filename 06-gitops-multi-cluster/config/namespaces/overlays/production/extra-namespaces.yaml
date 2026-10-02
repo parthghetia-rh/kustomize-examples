@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring-extra
+  labels:
+    managed-by: gitops
+    environment: production
+    purpose: extended-monitoring
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: security-scanning
+  labels:
+    managed-by: gitops
+    environment: production
+    purpose: security

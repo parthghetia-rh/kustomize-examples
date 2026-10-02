@@ -1,0 +1,19 @@
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ScanSetting
+metadata:
+  name: production-scan-setting
+  namespace: openshift-compliance
+spec:
+  autoApplyRemediations: false
+  autoUpdateRemediations: false
+  schedule: "0 1 * * *"
+  rawResultStorage:
+    pvAccessModes:
+      - ReadWriteOnce
+    rotation: 3
+    size: 1Gi
+  roles:
+    - worker
+    - master
+  scanTolerations:
+    - operator: Exists

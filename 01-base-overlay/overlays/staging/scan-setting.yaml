@@ -1,0 +1,18 @@
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ScanSetting
+metadata:
+  name: staging-scan-setting
+  namespace: openshift-compliance
+spec:
+  autoApplyRemediations: false
+  autoUpdateRemediations: false
+  schedule: "0 3 * * 0"
+  rawResultStorage:
+    pvAccessModes:
+      - ReadWriteOnce
+    rotation: 1
+    size: 1Gi
+  roles:
+    - worker
+  scanTolerations:
+    - operator: Exists

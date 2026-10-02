@@ -1,0 +1,13 @@
+controller:
+  replicaCount: 1
+
+  service:
+    type: NodePort
+
+  resources: {}
+
+  metrics:
+    enabled: false
+
+  admissionWebhooks:
+    enabled: false

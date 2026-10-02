@@ -1,0 +1,15 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: namespaces-all-clusters
+  namespace: open-cluster-management
+  annotations:
+    apps.open-cluster-management.io/github-path: config/namespaces/base
+    apps.open-cluster-management.io/git-branch: main
+spec:
+  channel: open-cluster-management/gitops-repo
+  placement:
+    placementRef:
+      name: all-clusters
+      kind: Placement
+      apiGroup: cluster.open-cluster-management.io

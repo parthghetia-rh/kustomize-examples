@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alpha-api
+  namespace: team-alpha
+  labels:
+    app: alpha-api
+    team: team-alpha
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: alpha-api
+  template:
+    metadata:
+      labels:
+        app: alpha-api
+        team: team-alpha
+    spec:
+      containers:
+        - name: api
+          image: registry.example.com/team-alpha/api:latest
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi

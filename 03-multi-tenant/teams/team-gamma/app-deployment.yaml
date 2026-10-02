@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gamma-dashboard
+  namespace: team-gamma
+  labels:
+    app: gamma-dashboard
+    team: team-gamma
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: gamma-dashboard
+  template:
+    metadata:
+      labels:
+        app: gamma-dashboard
+        team: team-gamma
+    spec:
+      containers:
+        - name: dashboard
+          image: registry.example.com/team-gamma/dashboard:latest
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 300m
+              memory: 256Mi

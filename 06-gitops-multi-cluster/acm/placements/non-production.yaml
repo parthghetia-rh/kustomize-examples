@@ -1,0 +1,18 @@
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: non-production
+  namespace: open-cluster-management
+spec:
+  predicates:
+  - requiredClusterSelector:
+      labelSelector:
+        matchExpressions:
+        - key: vendor
+          operator: In
+          values:
+          - OpenShift
+        - key: env
+          operator: NotIn
+          values:
+          - production

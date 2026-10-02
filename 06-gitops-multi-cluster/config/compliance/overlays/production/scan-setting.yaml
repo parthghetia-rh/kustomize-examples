@@ -1,0 +1,12 @@
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ScanSetting
+metadata:
+  name: production-scan
+  namespace: openshift-compliance
+spec:
+  schedule: "0 1 * * *"
+  roles:
+    - worker
+    - master
+  scanTolerations:
+    - operator: Exists

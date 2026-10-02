@@ -1,0 +1,50 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: platform-alerts
+  namespace: custom-monitoring
+  labels:
+    role: alert-rules
+    managed-by: gitops
+spec:
+  groups:
+    - name: platform.rules
+      rules:
+        - alert: HighCPUUsage
+          expr: |
+            100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+          for: 10m
+          labels:
+            severity: warning
+            team: platform
+          annotations:
+            summary: "High CPU usage detected on {{ $labels.instance }}"
+            description: >-
+              CPU usage on instance {{ $labels.instance }} has been above 80%
+              for more than 10 minutes. Current value is {{ $value | printf "%.1f" }}%.
+
+        - alert: HighMemoryUsage
+          expr: |
+            (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+          for: 10m
+          labels:
+            severity: warning
+            team: platform
+          annotations:
+            summary: "High memory usage on {{ $labels.instance }}"
+            description: >-
+              Memory usage on instance {{ $labels.instance }} has been above 85%
+              for more than 10 minutes. Current value is {{ $value | printf "%.1f" }}%.
+
+        - alert: PodRestartingTooOften
+          expr: |
+            rate(kube_pod_container_status_restarts_total[15m]) * 60 * 15 > 3
+          for: 5m
+          labels:
+            severity: warning
+            team: platform
+          annotations:
+            summary: "Pod {{ $labels.namespace }}/{{ $labels.pod }} is restarting frequently"
+            description: >-
+              Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} has restarted
+              more than 3 times in the last 15 minutes.

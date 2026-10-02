@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: placeholder
+  labels:
+    managed-by: platform-team
+    tenant: placeholder

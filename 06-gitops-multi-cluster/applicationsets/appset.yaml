@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: gitops-multi-cluster
+  namespace: openshift-gitops
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/example-org/gitops-multi-cluster.git
+        revision: main
+        directories:
+          - path: config/*/overlays/*
+  template:
+    metadata:
+      name: "{{path[1]}}-{{path[3]}}"
+      labels:
+        app.kubernetes.io/managed-by: applicationset
+        config-area: "{{path[1]}}"
+        environment: "{{path[3]}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/example-org/gitops-multi-cluster.git
+        targetRevision: main
+        path: "{{path}}"
+      destination:
+        server: "https://kubernetes.default.svc"
+        namespace: "{{path[1]}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - PruneLast=true
